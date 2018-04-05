@@ -13,48 +13,53 @@
  * The sizes of the arrays are returned as *columnSizes array.
  * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
  */
+
 int** generate(int numRows, int** columnSizes) 
 {
-    columnSizes = (int **)malloc(sizeof(int *) * numRows);
-    if(columnSizes == NULL)
-        return NULL;
-    for(int i = 0; i < numRows; i++)
+    int i=0;    
+    int j=0;
+
+    if(numRows == 0)
+    return 0;
+
+    int ** returnArray = (int **)malloc(sizeof(int *) * numRows);
+    for(i = 0; i < numRows; i++)
     {
-        columnSizes[i] = (int *)malloc(sizeof(int) * (i+1));
-        if(columnSizes[i] == NULL)
-            return NULL;
+        returnArray[i] = (int *)malloc(sizeof(int) * (i+1));
     }
- 
-    for(int i = 0; i < numRows; i++)
+
+    *columnSizes = (int *)malloc(sizeof(int)*numRows);
+
+    for(i=0; i<numRows; i++)
     {
-        for(int j = 0; j <= i; j++)
+        (*columnSizes)[i] = i+1;
+        for(j=0; j<i+1; j++)
         {
-            if(j != 0 && j != i)
-            {
-                columnSizes[i][j] = columnSizes[i-1][j] + columnSizes[i-1][j-1];
-            }
+            if( (0 != j)  && (i != j) )
+            returnArray[i][j] = returnArray[i-1][j-1] + returnArray[i-1][j];
         }
-        columnSizes[i][0] = columnSizes[i][i] = 1;
+        returnArray[i][0] = returnArray[i][i] = 1;
     }
- 
-    return columnSizes;
+
+    return returnArray;
+
 }
-
-
-
 
 int main()
 {
     int **p = NULL;
-    p = generate(N, p);
-    
+    int *columnSizes;
+    p = generate(N, &columnSizes);
+
+
+    printf("\n");
     for(int i = 0; i < N; i++)
     {
-        for(int j = 0; j <= i; j++)
+        for(int j = 0; j < columnSizes[i]; j++)
         {
-              printf("%d ", p[i][j]);
-         }
-    printf("\n");
+            printf("%d ", p[i][j]);
+        }
+        printf("\n");
     }
     return 0;
 }
