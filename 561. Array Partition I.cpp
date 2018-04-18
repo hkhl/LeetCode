@@ -51,3 +51,21 @@ public:
     }
 };
 
+
+
+/*  看了下答案, 发现上面傻了个B, 排序好 每两个元素的前一个本来就是最小的
+*  不需要求最小的元素了*/
+class Solution {
+public:
+    int arrayPairSum(vector<int>& nums) 
+    {
+        int sum = 0;
+        sort(nums.begin(), nums.end());
+        
+        for(int i = 0; i < nums.size(); i += 2)
+        {
+            sum += nums[i];
+        }
+        return sum;
+    }
+};
