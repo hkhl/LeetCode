@@ -52,15 +52,7 @@ public:
             t = t->next;
         }
 
-        if(l1)
-        {
-            t->next = l1;
-        }
-        if(l2)
-        {
-            t->next = l2;
-        }
-
+        t->next = l1 ? l1 : l2;
         return head;
     }
 };
