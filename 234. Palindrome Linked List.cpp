@@ -11,7 +11,6 @@
  *Output: true
  */
 
-
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -31,6 +30,36 @@ public:
 
   /*  不反转链表的话，可以使用递归，利用函数的调用栈来实现链表数据的逆向保存，大致的思路是这样的，左右节点两个指针，递归调用中判断1. 子链表是否回文(除右节点的子链表，递归调用)2. 当前的左右节点是否相同只要一个不满足，即不是回文，最后当右节移动到了链表尾部，全部满足，说明链表回文，时间复杂度和空间复杂度(不考虑递归的空间消耗)同上，简单的代码
 */
+
+    //递归实现
+
+    bool isPalindrome(ListNode* head)
+    {
+        if (head == NULL)
+            return true;
+        return Check(head, head);
+    }
+
+    bool Check(ListNode*& head, ListNode* cur) //传引用
+    {
+        if (cur == NULL)
+            return true;
+
+        if(!Check(head, cur->next))       //有一个false 那就始终返回false 不再考虑
+            return false;
+
+
+        if(head->val == cur->val)
+        {
+            head = head->next;
+            return true;
+        }
+        return false;
+    }
+
+
+
+    /*hashCode实现
     bool isPalindrome(ListNode* head)
     {
         int lhash = 0, rhash = 0;
@@ -42,8 +71,12 @@ public:
         }
         return lhash == rhash;
 
-        //上述方法是JAVA中  string的 hashCode实现方法
+    }*/
 
-    }
+
+
+
 
 };
+
+
