@@ -20,6 +20,7 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+
 class Solution {
 public:
     //找二叉树最长的的路径
@@ -45,4 +46,26 @@ public:
 
         return max(ret, max(diameterOfBinaryTree(root->left), diameterOfBinaryTree(root->right)));
     }
+
+    /*另一种解法
+    public class Solution {
+    int max = 0;
+
+    public int diameterOfBinaryTree(TreeNode root) {
+        maxDepth(root);
+        return max;
+    }
+
+    private int maxDepth(TreeNode root) {
+        if (root == null) return 0;
+
+        int left = maxDepth(root.left);
+        int right = maxDepth(root.right);
+
+        max = Math.max(max, left + right);
+
+        return Math.max(left, right) + 1;
+    }
+}
+    */
 };
